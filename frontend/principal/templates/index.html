@@ -7,17 +7,25 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Frontend</h1>
-    <h2>Enviar info</h2>
+    <h1>Bienvenido</h1>
+    <h2>CARGA TUS ARCHIVOS CSV:</h2>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      <input type="file" name="document1" id="document1" accept=".csv"/>
-      <input type="file" name="document2" id="document2" accept=".csv"/>
-      <input type="file" name="document3" id="document3" accept=".csv"/>
-      <input type="file" name="document4" id="document4" accept=".csv"/>
-      <input type="submit" value="Enviar archivo" />
+      <h5>-Archivo clientes:</h5>
+      <input type="file" name="document1" id="document1" accept=".csv"/><br><br>
+      <h5>-Archivo juegos:</h5>
+      <input type="file" name="document2" id="document2" accept=".csv"/><br><br>
+      <h5>-Archivo juegos mas vendidos:</h5>
+      <input type="file" name="document3" id="document3" accept=".csv"/><br><br>
+      <h5>-Archivo mejores clientes:</h5>
+      <input type="file" name="document4" id="document4" accept=".csv"/><br><br><br><br>
+      <input type="submit" value="Mostrar XML" style="background-color: yellow" /><br>
     </form>
-    <h2>Recibir Info</h2>
-    <p>{{ data }}</p>
+    <br><br><br>
+    <h2>XML:</h2>
+    <textarea name="Archivo Cargado" cols="200" rows="40">{{ str_xml }}</textarea>
+
+
+
   </body>
 </html>
