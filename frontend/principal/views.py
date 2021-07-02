@@ -1,9 +1,10 @@
 import os
 
 from django.shortcuts import render
-import request
+import requests
 import re
 from unicodedata import normalize
+
 #import pathlib
 #from pathlib import Path
 #from os import path
@@ -197,7 +198,7 @@ def xml1(lista):
              "\t\t<nombre>"+str(name)+"</nombre>\n" \
              "\t\t<apellido>"+str(ape)+"</apellido>\n" \
              "\t\t<edad>"+str(edad)+"</edad>\n" \
-             "\t\t<fechaCumpleaños>"+str(fecha1)+"</fechaCumpleaños>\n" \
+             "\t\t<fechaCumpleannos>"+str(fecha1)+"</fechaCumpleannos>\n" \
              "\t\t<fechaPrimeraCompra>"+str(fecha2)+"</fechaPrimeraCompra>\n" \
              "\t</clientes>\n"
 
@@ -216,7 +217,7 @@ def xml2(lista):
         xml+="\t<juegos>\n" \
              "\t\t<nombre>"+str(name)+"</nombre>\n" \
              "\t\t<plataforma>"+str(pla)+"</plataforma>\n" \
-             "\t\t<añoLanzamiento>"+str(year)+"</añoLanzamiento>\n" \
+             "\t\t<annoLanzamiento>"+str(year)+"</annoLanzamiento>\n" \
              "\t\t<clasificacion>"+str(cate)+"</clasificacion>\n" \
              "\t\t<stock>"+str(stock)+"</stock>\n" \
              "\t</juegos>\n"
@@ -272,9 +273,15 @@ def xml4(lista):
 
 ##VISTAS
 
+endpoint='http://localhost:5000{}'
 def index(request):
+    xmlTOTAL = ""
+    contador=0
     if request.method=='POST':
-        xmlTOTAL=""
+        contador=+1
+        print("-------------CONTADORRRRRRRRRRRRR------"+str(contador))
+
+
         # arch=archivo.read()
         # print(arch)
         # data1=csv1.read()
@@ -292,24 +299,6 @@ def index(request):
             listaU = filas.split(divi)
             listaC.append(listaU)
         print(listaC)
-
-
-
-
-
-
-
-
-        """listad1=list(str(data1))
-        listad1.pop(0)
-        listad1.pop(0)
-        listad1.pop(len(listad1)-1)
-        for listaC in listad1:
-            clientes+=str(listaC)
-
-        print("--------Clientes-------")
-        print(clientes)"""
-
 
 
         csv2 = request.FILES['document2']
@@ -387,17 +376,22 @@ def index(request):
         else:
             data="Los archivos CSV poseen algun error"
             context={
-                'data':data
+                'str_xml': xmlTOTAL
             }
+        xmlfin=open("archivo1.xml","w+")
+        xmlfin.write(xmlTOTAL)
+        xmldata=xmlfin.read()
 
-
+        url=endpoint.format('/xml')
+        requests.post(url,xmldata)
 
 
         return render(request,'index.html',context)
 
     elif request.method=='GET':
-        data=""
+        url=endpoint.format('/xml')
+        data= requests.get(url)
         context={
-            'data':data,
+            'str_xml2':data,
         }
         return render(request,'index.html',context)

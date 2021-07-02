@@ -7,6 +7,13 @@
     <title>Document</title>
   </head>
   <body>
+  <style>
+    body{
+    background: url(fondo.jpg);
+    background-size: 100%
+
+}
+    </style>
     <h1>Bienvenido</h1>
     <h2>CARGA TUS ARCHIVOS CSV:</h2>
     <form method="POST" enctype="multipart/form-data">
@@ -24,6 +31,13 @@
     <br><br><br>
     <h2>XML:</h2>
     <textarea name="Archivo Cargado" cols="200" rows="40">{{ str_xml }}</textarea>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="submit" value="Enviar XML" style="background-color: yellow" /><br>
+    </form>
+    <br><br><br>
+    <h2>XML recibido:</h2>
+    <textarea name="Archivo Cargado2" cols="200" rows="40">{{ str_xml2 }}</textarea>
 
 
 
